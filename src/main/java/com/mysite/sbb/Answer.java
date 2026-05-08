@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Getter
@@ -18,7 +19,7 @@ public class Answer {
 
     private LocalDateTime createDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     private Question question; // QUESTION_ID 칼럼
 
     @Column(columnDefinition = "TEXT")
