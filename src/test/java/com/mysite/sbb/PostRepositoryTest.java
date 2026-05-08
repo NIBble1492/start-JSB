@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +57,15 @@ class PostRepositoryTest  {
     }
 
     @Test
+    @DisplayName("findBySubjectLike")
+    void t5() {
+        List<Question> questions = questionRepository.findBySubjectLike("sbb%");
+
+        Question question = questions.get(0);
+        assertThat(question.getSubject()).isEqualTo("sbb가 무엇인가요?");
+    }
+
+    @Test
     @DisplayName("수정")
     @Transactional
     void t6() {
@@ -99,6 +109,7 @@ class PostRepositoryTest  {
     @Test
     @DisplayName("답변 생성 by oneToMany")
     @Transactional
+    @Rollback(false)
     void t9() {
         Question question = questionRepository.findById(2).get();
 
