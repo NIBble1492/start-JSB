@@ -54,7 +54,7 @@ class PostRepositoryTest  {
     @Test
     @DisplayName("수정")
     @Transactional
-    void t6() { // 가장 먼저 실행시키기 위해서 일단 t6이 아닌 t0으로 메서드명 변경
+    void t6() {
         Question question = questionRepository.findById(1).get();
         assertThat(question).isNotNull();
 
@@ -63,5 +63,17 @@ class PostRepositoryTest  {
 
         Question foundQuestion = questionRepository.findBySubject("수정된 제목").get();
         assertThat(foundQuestion).isNotNull();
+    }
+
+    @Test
+    @DisplayName("삭제")
+    @Transactional
+    void t7() {
+        assertThat(questionRepository.count()).isEqualTo(2);
+
+        Question question = questionRepository.findById(1).get();
+        questionRepository.delete(question);
+
+        assertThat(questionRepository.count()).isEqualTo(1);
     }
 }
